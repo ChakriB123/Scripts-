@@ -1,0 +1,90 @@
+<html>
+    
+    
+  <script>
+      
+      
+      var NumArray = new Array(10)
+      
+      
+      function f_RandomNumbers()
+      {
+          for(var i = 0; i<NumArray.length; i++)
+              {
+                  NumArray[i]= parseInt(Math.random()*20);
+              }
+      }
+
+  function f_SelectionArray()
+      {
+          
+            
+          for(var i=0; i<NumArray.length; i++)
+              {
+                  var SelectIndex = i;
+                  for(var j =i+1; j<NumArray.length; j++)  
+                      {
+                         if(NumArray[j] < NumArray[SelectIndex])
+                            {
+                                  SelectIndex = j;
+                            }
+                      }
+                  if(SelectIndex != i)
+                      {
+                          var LowIndex = NumArray[i];
+                          NumArray[i] = NumArray[SelectIndex];
+                          NumArray[SelectIndex] = LowIndex;
+                      }
+              }
+                    return NumArray;
+      
+      
+      
+      }
+
+      
+     function f_BinarySearch()
+      {
+           var UserInput = window.prompt("search a number");
+           
+           var LowIndex = 0;
+           var HighIndex = 9;
+          
+           var n = NumArray.length;
+          
+           var MidIndex = 0;
+          
+   for(var i = 0  ; i < n; i++)
+     {
+         
+             MidIndex = Math.floor((LowIndex + HighIndex)/2);
+                     
+      if(NumArray[MidIndex] == UserInput)
+         {
+            return document.write("the given number is present in the array at index " + MidIndex);
+         }  
+
+   else if(UserInput > NumArray[MidIndex])
+          {
+                  LowIndex = MidIndex + 1;
+          }
+   else if(UserInput < NumArray[MidIndex])
+          {
+                  HighIndex = MidIndex - 1;
+          }
+                      
+    }
+         return document.write("the number is not present")
+      }
+      
+      f_RandomNumbers();
+      console.log(NumArray);
+      f_SelectionArray();
+      console.log(NumArray);
+      f_BinarySearch();
+      
+      
+      
+       
+       </script>
+</html>

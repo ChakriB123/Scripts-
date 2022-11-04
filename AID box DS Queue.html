@@ -1,0 +1,148 @@
+<html>
+
+      <canvas id="mycanvas" width="1000" height="800" style=" border: 3px #fc0e0e"></canvas>
+    
+  <script>
+
+    var g_Canvas = document.getElementById("mycanvas");
+    var g_Ctx = g_Canvas.getContext("2d");
+       
+       
+    
+      
+        class C_Box
+        {
+            constructor(l_colour)
+             {
+                  this.Box_xpos = 0;
+                  this.Box_Ypos = 0;
+                  this.Box_Size = 40;
+                  this.Box_Colour = l_colour; 
+             }
+            
+         m_DrawBox(l_Ctx)
+              {
+                  l_Ctx.fillStyle = this.Box_Colour
+                  l_Ctx.fillRect(this.Box_xpos,this.Box_Ypos,this.Box_Size,this.Box_Size)
+                  l_Ctx.strokeRect(this.Box_xpos,this.Box_Ypos,this.Box_Size,this.Box_Size)
+              }
+         
+        }
+     
+      
+          class C_Queue
+        {
+            constructor()
+             {
+                  this.QueueArray = new Array(10);
+                  this.count = 0;
+                 this.Xpos = 300;
+                 this.Ypos = 500;
+                
+                
+             }
+     
+            
+         m_push(l_obj)
+            {
+                if(this.count < this.QueueArray.length )
+                    {
+                        this.QueueArray[this.count] = l_obj;
+                        this.QueueArray[this.count].Box_xpos = this.Xpos;
+                        this.QueueArray[this.count].Box_Ypos = this.Ypos - (this.count*this.QueueArray[this.count].Box_Size);
+                        this.count += 1;
+                    }
+
+            }
+            
+         m_pop()
+            {
+                
+                if(this.count >= 0)
+                   {
+                        var DeleteObj = this.QueueArray[0];     
+
+                     for( var j = 0; j < this.count-1; j++)
+                        {
+
+                            this.QueueArray[j] = this.QueueArray[j+1] ;
+                            this.QueueArray[j].Box_xpos = this.Xpos;
+                            this.QueueArray[j].Box_Ypos = this.Ypos -(j*this.QueueArray[j].Box_Size);
+                          
+                            
+                        }
+                       
+                        this.QueueArray[this.count] = null;
+                        this.count -= 1;
+                       
+                        return DeleteObj;
+                   }
+            }
+            
+            m_DrawQueue(l_Ctx)
+            {
+                for(var i=0;i<this.count;i++)
+                {
+                    this.QueueArray[i].m_DrawBox(l_Ctx);
+                }
+            }
+            
+        
+            
+        
+        }
+      
+      
+      
+            function   f_DrawQueue()
+            {
+                    g_Ctx.clearRect(0,0,g_Canvas.width,g_Canvas.height);
+                    Queue_1.m_DrawQueue(g_Ctx);
+            }
+    
+    
+    
+        var Queue_1 = new C_Queue();
+       var colour = ["red","green","blue","pink","yellow","purple","orange","gray","brown","violet"];  
+     
+    
+    function f_KeydownEventHandler(l_eventData)
+    {
+        if(l_eventData.keyCode == 39 || l_eventData.keyCode == 68 )
+            {
+                 
+                 Queue_1.m_pop();
+                 f_DrawQueue();
+                
+            }
+        if(l_eventData.keyCode == 37 || l_eventData.keyCode == 65)
+            {
+                var l_RandomIndex = parseInt(Math.random()*10);
+                var BoxObj = new C_Box(colour[l_RandomIndex]);
+                Queue_1.m_push(BoxObj);
+
+                     f_DrawQueue();
+            }
+                    
+         }
+        
+    
+          
+              
+ 
+   
+    document.addEventListener("keydown",f_KeydownEventHandler);  
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+    </script>
+</html>

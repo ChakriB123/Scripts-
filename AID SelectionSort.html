@@ -1,0 +1,58 @@
+<html>
+    
+    
+  <script>
+      
+      
+      var NumArray = new Array(10)
+      
+      
+      function f_RandomNumbers()
+      {
+          for(var i = 0; i<NumArray.length; i++)
+              {
+                  NumArray[i]= parseInt(Math.random()*20);
+              }
+      }
+
+  function f_SelectionArray()
+      {
+          
+            
+          for(var i=0; i<NumArray.length; i++)
+              {
+                  var SelectIndex = i;
+                  for(var j =i+1; j<NumArray.length; j++)  
+                      {
+                         if(NumArray[j] < NumArray[SelectIndex])
+                            {
+                                  SelectIndex = j;
+                            }
+                      }
+                  if(SelectIndex != i)
+                      {
+                          var LowIndex = NumArray[i];
+                          NumArray[i] = NumArray[SelectIndex];
+                          NumArray[SelectIndex] = LowIndex;
+                      }
+              }
+                    return NumArray;
+      
+      
+      
+      }
+      
+      f_RandomNumbers();
+      document.write(NumArray + "<br>");
+      f_SelectionArray();
+      document.write(NumArray);
+      
+      
+      
+      
+      
+      
+      
+       
+       </script>
+</html>

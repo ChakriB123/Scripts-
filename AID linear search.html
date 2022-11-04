@@ -1,0 +1,56 @@
+<html>
+    
+    
+  <script>
+      
+      
+      var NumArray = new Array(10)
+      
+      function f_RandomNum()
+      {
+          for(var i=0; i<NumArray.length; i++)
+              {
+                  NumArray[i]= parseInt(Math.random()*50);
+              }
+      }
+      
+     
+      function f_LinearSearch()
+      {
+             for(var i=0; i<NumArray.length; i++)
+                 {
+                 if(NumArray[i] == userinput)
+                     {
+                         
+                       return document.write("the given userinput is present in the index of " + i);
+                       //  NumArray.length = i
+
+                     }
+
+                 }
+          return document.write("the given userinput is not present in the array" );
+      }
+      
+      f_RandomNum();
+      
+      console.log(NumArray);
+      var userinput = window.prompt("search a number");
+      
+      document.write("<br>")
+      
+      f_LinearSearch();
+    //  console.log(NumArray);
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       </script>
+</html>

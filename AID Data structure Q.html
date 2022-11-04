@@ -1,0 +1,88 @@
+<html>
+    
+  <script>
+      
+      var g_PressRightFlag = 0;
+      var g_PressLeftFlag = 0;
+      
+      
+    class C_Queue
+        {
+            constructor()
+             {
+                 this.QueueArray = new Array(10);
+                 this.pushIndex = 0;
+                 
+             }
+            
+         m_push(value)
+            {
+                if(this.pushIndex < (this.QueueArray.length) )
+                    {
+                        this.QueueArray[this.pushIndex] = value;
+                        console.log( value +" added to "+ this.pushIndex);
+                        this.pushIndex += 1;
+                    }
+              
+            }
+            
+         m_pop()
+            {
+              
+               if(this.pushIndex > 0)
+                   {
+               
+                        var Deletenumber = this.QueueArray[0];     
+                        for( var i = 0; i < this.QueueArray.length; i++)
+                        {
+
+                            this.QueueArray[i] = this.QueueArray[i+1] 
+
+                        }
+                        this.pushIndex -= 1;
+                        console.log(Deletenumber + "removed");
+                        return Deletenumber;
+                   }
+            }
+            
+            
+        
+        }
+    
+   function f_PrintQueue()
+            {
+                console.log(Queue_1.QueueArray);  
+            }
+    
+         var Queue_1 = new C_Queue();
+       
+         
+          function f_KeydownEventHandler(l_eventData)
+    {
+        if(l_eventData.keyCode == 39 || l_eventData.keyCode == 68 )
+            {
+                 Queue_1.m_pop();
+                 f_PrintQueue();
+                
+            }
+        if(l_eventData.keyCode == 37 || l_eventData.keyCode == 65)
+            {
+                
+                Queue_1.m_push(Math.round(Math.random()*10));
+                
+                f_PrintQueue();
+                    
+            }
+        
+    }
+              
+              
+ 
+   
+    document.addEventListener("keydown",f_KeydownEventHandler);
+    
+    
+    
+    
+    </script>
+</html>

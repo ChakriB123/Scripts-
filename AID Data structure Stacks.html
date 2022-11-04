@@ -1,0 +1,93 @@
+<html>
+    
+  <script>
+      
+      var g_PressRightFlag = 0;
+      var g_PressLeftFlag = 0;
+      
+      
+    class C_Stacks
+        {
+            constructor()
+             {
+                 this.StackArray = new Array(10);
+                 this.count = 0;
+                
+             }
+            
+         m_push(value)
+            {
+                if(this.count < this.StackArray.length )
+                    {
+                        this.StackArray[this.count] = value;
+                        console.log( value +" added to "+ this.count);
+                        this.count += 1;
+                    }
+              
+            }
+            
+         m_pop()
+            {
+                if(this.count < 0)
+                     {
+                         return ;
+                     }
+                
+                if(this.count >= 0)
+                   {
+                        var Deletenumber = this.StackArray[this.count -1];
+                        this.StackArray[this.count -1] = undefined;
+                        this.count -= 1;
+                        //this.StackArray.length = this.StackArray.length  - 1;
+                        console.log(Deletenumber + "removed");
+                        return Deletenumber;
+                   }
+            }
+            
+        
+            
+        
+        }
+      
+      
+      
+  function   f_PrintStack()
+            {
+                
+                console.log(stack_1.StackArray);
+                    
+            }
+    
+    
+    
+         var stack_1 = new C_Stacks()
+       
+    
+                
+    
+    function f_KeydownEventHandler(l_eventData)
+    {
+        if(l_eventData.keyCode == 39 || l_eventData.keyCode == 68 )
+            {
+                 stack_1.m_pop();
+                 console.log(f_PrintStack());
+                
+            }
+        if(l_eventData.keyCode == 37 || l_eventData.keyCode == 65)
+            {
+                
+                stack_1.m_push(Math.round(Math.random()*10));
+                console.log(f_PrintStack());
+                    
+            }
+        
+    }
+              
+              
+ 
+   
+    document.addEventListener("keydown",f_KeydownEventHandler);
+    
+    
+    </script>
+</html>

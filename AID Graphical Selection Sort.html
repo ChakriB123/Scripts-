@@ -1,0 +1,164 @@
+<html>
+    <canvas id="mycanvas" width="1000" height="800" style=" border: 3px #fc0e0e"></canvas>
+    
+  <script>
+      
+      
+      var g_Canvas = document.getElementById("mycanvas");
+      var g_Ctx = g_Canvas.getContext("2d");
+      
+      var HeightArray = new Array(5)
+      
+  function f_RandomNumbers()
+      {
+          for(var i = 0; i<HeightArray.length; i++)
+              {
+                  HeightArray[i]= parseInt(Math.random()*(-(200+50)-50));
+              }
+      }
+    
+ 
+
+  function f_SelectionArray()
+      {
+          
+            
+          for(var i=0; i<HeightArray.length; i++)
+              {
+                  var SelectIndex = i;
+                  for(var j =i+1; j<HeightArray.length; j++)  
+                      {
+                         if(HeightArray[j] > HeightArray[SelectIndex])
+                            {
+                                  SelectIndex = j;
+                            }
+                      }
+                  
+                  if(SelectIndex != i)
+                      {
+                          var LowIndex = HeightArray[i];
+                          HeightArray[i] = HeightArray[SelectIndex];
+                          HeightArray[SelectIndex] = LowIndex;
+                          
+                          var BoxSort = Box_Array[i];
+                          Box_Array[i] = Box_Array[SelectIndex];
+                          Box_Array[SelectIndex] = BoxSort;
+                          
+                          var frontend = Box_Array[i].Xpos;
+                          Box_Array[i].Xpos = Box_Array[SelectIndex].Xpos;
+                          Box_Array[SelectIndex].Xpos = frontend;
+   
+                      }
+                         Box_Array[i].m_DrawBox();
+              }
+                    return HeightArray;
+                     
+      
+      
+      
+      }
+      
+      
+      
+      
+      
+      class C_Box
+          {
+              constructor(Xpos,Ypos,size_Xpos,size_Ypos,colour)
+              {
+                  this.Xpos = Xpos;
+                  this.Ypos = Ypos;
+                  this.Size_Xpos = size_Xpos;
+                  this.Size_Ypos = size_Ypos;
+                  this.colour = colour;
+              }
+              
+              m_DrawBox()
+              {
+                  g_Ctx.fillStyle = this.colour;
+                  g_Ctx.fillRect(this.Xpos,this.Ypos,this.Size_Xpos,this.Size_Ypos);
+                  g_Ctx.strokeStyle = "black"
+                  g_Ctx.strokeRect(this.Xpos,this.Ypos,this.Size_Xpos,this.Size_Ypos)
+              }
+          
+          }
+      
+      
+      var Box_Array = new Array(5);
+      
+    function f_BoxArray()
+      {
+          for(var i = 0; i<HeightArray.length; i++)
+              {
+                  l_colour = ["blue","red","green","orange","yellow"];  
+                  
+                  var l_DistanceBtwGraphs = 0;
+                  l_DistanceBtwGraphs = 50*i;
+                  
+                  Box_Array[i] = new C_Box(200+l_DistanceBtwGraphs,500,30,HeightArray[i],l_colour[i]);
+                  
+                  Box_Array[i].m_DrawBox();
+                 
+              }
+      }
+      
+    function f_FrontBoxArray()
+      {
+          for(var i = 0; i<HeightArray.length; i++)
+              {
+                  l_colour = ["blue","red","green","orange","yellow"];  
+                  
+                  var l_DistanceBtwGraphs = 0;
+                  l_DistanceBtwGraphs = 50*i;
+                  
+                  Box_Array[i] = new C_Box(200+l_DistanceBtwGraphs,500,30,HeightArray[i],l_colour[i]);
+                  
+                  
+                 
+              }
+      }
+              
+    
+      
+      function f_ClearBox()
+            {
+                    g_Ctx.clearRect(0,0,g_Canvas.width,g_Canvas.height);
+                   
+            }
+                
+      
+    
+                f_RandomNumbers();
+                console.log(HeightArray);
+                f_BoxArray();
+      
+      
+       function f_KeydownEventHandler(l_eventData)
+    {
+  
+        if(l_eventData.keyCode == 39 || l_eventData.keyCode == 68 )
+            {
+                 f_ClearBox();
+                 f_FrontBoxArray();
+                 f_SelectionArray();
+                 console.log(HeightArray);  
+            }
+                    
+     }
+        
+    
+        
+      
+ 
+   
+    document.addEventListener("keydown",f_KeydownEventHandler);
+      
+      
+      
+
+      
+      
+      
+       
+       </script>
+</html>

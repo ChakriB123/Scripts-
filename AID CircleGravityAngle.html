@@ -1,0 +1,144 @@
+<html>
+
+      <canvas id="mycanvas" width="2000" height="600" style=" border: 3px #fc0e0e"></canvas>
+    
+  <script>
+
+    var g_Canvas = document.getElementById("mycanvas");
+    var g_Ctx = g_Canvas.getContext("2d");
+      
+    var g_FrameRate = 30;
+    var g_TimeInterval = 1000/g_FrameRate;
+    
+
+
+    class C_GravityCircle
+        {
+            constructor(circlexpos,circleypos,circlecolour,rotateangle)
+            {
+                this.CircleXpos = circlexpos;
+                this.CircleYpos = circleypos;
+                this.CircleColour = circlecolour;
+                this.IsSpacebarActive = 0
+               // this.InitialVelocity = -30
+                this.CircleYspeed = -25
+                this.CircleXspeed = 25
+              //  this.ResetVelocity = this.InitialVelocity
+                this.CircleRadius = 30
+                this.Accelerate = 1
+                this.rotateAngle = rotateangle
+            }
+            
+          m_DrawCircle()
+            {
+                
+               g_Ctx.beginPath();
+               g_Ctx.fillStyle = this.CircleColour;
+               g_Ctx.arc(this.CircleXpos,this.CircleYpos,this.CircleRadius,0,Math.PI*2);
+               g_Ctx.fill();
+               g_Ctx.closePath();
+                
+            }
+          m_MoveCircle()
+            {
+                if(this.IsSpacebarActive == 1)
+                    {
+                this.CircleYpos += Math.sin(this.rotateAngle*Math.PI/180)* this.CircleYspeed          
+                this.CircleXpos += Math.cos(this.rotateAngle*Math.PI/180)* this.CircleXspeed 
+                        
+                this.CircleYspeed += this.Accelerate
+                
+                       
+                    }
+            }
+         m_BoundaryCollision()
+            {
+                
+         if(this.CircleYpos + this.CircleRadius >= g_Canvas.height && this.IsSpacebarActive == 1 )
+             {
+                // this.InitialVelocity = this.InitialVelocity/1.2
+                 this.CircleYpos = g_Canvas.height - this.CircleRadius
+                 this.CircleXspeed = 0
+             
+                
+             /*if(this.InitialVelocity > -5)
+                     {
+                         this.IsSpacebarActive = 0
+                         this.InitialVelocity = this.ResetVelocity
+                          this.CircleYpos = g_Canvas.height - this.CircleRadius
+                     }*/
+                
+             }
+             
+                
+            }
+         
+        
+            
+        }
+    
+      function f_ClearCanvas()
+      {
+           g_Ctx.clearRect(0,0,g_Canvas.width,g_Canvas.height)
+           g_Ctx.strokeRect(0,0,g_Canvas.width,g_Canvas.height)
+      }
+      
+       var GravityCircle_1 = new C_GravityCircle(700,570,"red",120)
+       var GravityCircle_2 = new C_GravityCircle(700,570,"blue",90)
+       var GravityCircle_3 = new C_GravityCircle(700,570,"pink",60)
+       
+      function f_GameLoop()
+      {
+          GravityCircle_1.m_MoveCircle();
+          GravityCircle_2.m_MoveCircle();
+          GravityCircle_3.m_MoveCircle();
+          
+          GravityCircle_1.m_BoundaryCollision();
+          GravityCircle_2.m_BoundaryCollision();
+          GravityCircle_3.m_BoundaryCollision();
+          
+          f_ClearCanvas();
+          
+          GravityCircle_1.m_DrawCircle();
+          GravityCircle_2.m_DrawCircle();
+          GravityCircle_3.m_DrawCircle();
+      }
+    
+function f_KeydownEventHandler(l_eventData)
+    {
+        if(l_eventData.keyCode == 32 )
+            {
+                if(GravityCircle_1.IsSpacebarActive == 0)
+                    {
+                        GravityCircle_1.IsSpacebarActive = 1;
+                    }
+                
+                if(GravityCircle_2.IsSpacebarActive == 0)
+                    {
+                        GravityCircle_2.IsSpacebarActive = 1;
+                    }
+                
+                if(GravityCircle_3.IsSpacebarActive == 0)
+                    {
+                        GravityCircle_3.IsSpacebarActive = 1;
+                    }
+                
+            }
+
+    }
+              
+        
+    
+      
+     
+   var id = setInterval(f_GameLoop,g_TimeInterval)
+   
+    document.addEventListener("keydown",f_KeydownEventHandler);
+    
+      
+      
+      
+      
+        </script>
+
+</html>
